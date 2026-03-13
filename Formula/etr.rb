@@ -12,9 +12,14 @@ class Etr < Formula
     # Ensure module mode and a predictable build.
     ENV["GO111MODULE"] = "on"
 
-    # If you embed version info via -ldflags in your release workflow,
-    # you can optionally wire it in here later.
-    system "go", "build", *std_go_args(output: bin/"etr"), "./cmd/etr"
+    ldflags = [
+      "-s", "-w",
+      "-X", "github.com/tkjaer/etr/internal/version.Version=#{version}",
+      "-X", "github.com/tkjaer/etr/internal/version.GitCommit=unknown",
+      "-X", "github.com/tkjaer/etr/internal/version.BuildDate=homebrew"
+    ]
+
+    system "go", "build", *std_go_args(output: bin/"etr", ldflags: ldflags.join(" ")), "./cmd/etr"
   end
 
   test do
