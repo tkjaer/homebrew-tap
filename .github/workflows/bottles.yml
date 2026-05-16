@@ -83,6 +83,11 @@ jobs:
         run: |
           tag="v${{ steps.formula.outputs.version }}"
           gh release create "$tag" --title "etr $tag bottles" --notes "Homebrew bottles for etr $tag" 2>/dev/null || true
+          # Rename double-dash to single-dash (brew bottle creates --, Homebrew downloads with -)
+          for f in *.bottle*.tar.gz; do
+            newname="${f/etr--/etr-}"
+            [ "$f" != "$newname" ] && mv "$f" "$newname"
+          done
           gh release upload "$tag" *.bottle*.tar.gz --clobber
 
       - name: Tap local repo
