@@ -101,5 +101,5 @@ jobs:
           git add Formula/etr.rb
           git diff --cached --quiet || {
             git commit -m "Update bottles for etr ${{ steps.formula.outputs.version }} [bottles]"
-            git push
+            git push origin main
           }
