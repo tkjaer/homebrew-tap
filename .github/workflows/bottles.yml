@@ -45,14 +45,15 @@ jobs:
           brew bottle --json \
             --root-url="https://github.com/${{ github.repository }}/releases/download/v${{ steps.formula.outputs.version }}" \
             tkjaer/tap/etr
+          ls -la *.bottle*
 
       - name: Upload bottle artifact
         uses: actions/upload-artifact@v7
         with:
           name: bottle-${{ matrix.os }}
           path: |
-            *.bottle.tar.gz
-            *.bottle.json
+            ${{ github.workspace }}/*.bottle.tar.gz
+            ${{ github.workspace }}/*.bottle.json
 
   publish:
     needs: bottle
