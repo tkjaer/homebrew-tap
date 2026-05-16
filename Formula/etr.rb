@@ -7,9 +7,9 @@ class Etr < Formula
 
   bottle do
     root_url "https://github.com/tkjaer/homebrew-tap/releases/download/v1.2.6"
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma: "701e921cbcd689b3856813f424cf6978f3b3f7087d6b1140a4cd28eeb633df11"
-    sha256 cellar: :any_skip_relocation, sequoia:      "9b9c25537c2579b869610646a96e7094f24f13518c7fed79ddc984fbba89d76c"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, arm64_sonoma: "e4273d927789369bf2ecdad0fd83b7a539979922c9fa1ef570027f8c4fffdbe6"
+    sha256 cellar: :any_skip_relocation, sequoia:      "7828320f00a5ff8822a68c9fded87743ffbd089b709a9b3b494c21a30c89ccf8"
   end
 
   depends_on "go" => :build
