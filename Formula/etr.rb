@@ -6,7 +6,7 @@ class Etr < Formula
   license "MIT"
 
   depends_on "go" => :build
-  depends_on "libpcap"
+  uses_from_macos "libpcap"
 
   def install
     # Ensure module mode and a predictable build.
