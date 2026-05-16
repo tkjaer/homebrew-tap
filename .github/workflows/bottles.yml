@@ -16,8 +16,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-14         # ARM64 (Sonoma) — bottles work on Sonoma+
-          - os: macos-14-large   # Intel (Sonoma) — bottles work on Sonoma+
+          - os: macos-14          # ARM64 (Sonoma) — bottles work on Sonoma+
+          - os: macos-15-intel    # Intel (Sequoia) — bottles work on Sequoia+
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
