@@ -52,7 +52,7 @@ jobs:
         with:
           name: bottle-${{ matrix.os }}
           path: |
-            ${{ github.workspace }}/*.bottle.tar.gz
+            ${{ github.workspace }}/*.bottle*.tar.gz
             ${{ github.workspace }}/*.bottle.json
 
   publish:
@@ -83,7 +83,7 @@ jobs:
         run: |
           tag="v${{ steps.formula.outputs.version }}"
           gh release create "$tag" --title "etr $tag bottles" --notes "Homebrew bottles for etr $tag" 2>/dev/null || true
-          gh release upload "$tag" *.bottle.tar.gz --clobber
+          gh release upload "$tag" *.bottle*.tar.gz --clobber
 
       - name: Tap local repo
         run: |
@@ -92,7 +92,7 @@ jobs:
           ln -sf "$GITHUB_WORKSPACE" "$tap_dir"
 
       - name: Update formula with bottle block
-        run: brew bottle --merge --write --no-commit *.json
+        run: brew bottle --merge --write --no-commit *.bottle.json
 
       - name: Commit and push
         run: |
