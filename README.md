@@ -44,6 +44,15 @@ Changes to `main` must go through a pull request, including administrator change
 Force pushes and branch deletion are blocked. Reviewer approval is not required,
 so the maintainer can merge their own pull requests.
 
+When bumping a formula's version, remove its `bottle do … end` block in the same
+pull request. The old block points at the previous release's bottles, which
+would make installs fail until new bottles exist. Without it, installs build
+from source in the meantime.
+
+Bottles are only built on `macos-latest` (Apple Silicon), because Homebrew no
+longer provides Intel bottles for build dependencies such as `go`. Intel Macs
+can use the prebuilt `etr-darwin-amd64` binary from the etr releases instead.
+
 After a formula update is merged, the Bottles workflow builds and uploads bottles,
 then opens a separate pull request with the updated bottle metadata. Review and
 merge that pull request, keeping `[bottles]` in the merge commit message to avoid
