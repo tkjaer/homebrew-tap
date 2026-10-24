@@ -73,6 +73,11 @@ jobs:
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@main
+        with:
+          # setup-homebrew replaces the checkout's .git, dropping the credentials
+          # actions/checkout stored there. Its token stays configured for the
+          # rest of the job, which the bottle PR branch push needs.
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Download all bottles
         uses: actions/download-artifact@v8

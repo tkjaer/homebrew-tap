@@ -5,6 +5,12 @@ class Etr < Formula
   sha256 "92ef35d8e8dc18cc32aa0eb7334f2bda2dbb10c53a9d773e48b075d839ef05b1"
   license "MIT"
 
+  bottle do
+    root_url "https://github.com/tkjaer/homebrew-tap/releases/download/v1.2.7"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_tahoe: "13ddff53975bb2c7d6e01d5dc49c52f71ca993e76ecee51351bce6a4ac53014a"
+  end
+
   depends_on "go" => :build
   uses_from_macos "libpcap"
 
