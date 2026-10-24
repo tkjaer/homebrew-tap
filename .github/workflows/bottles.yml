@@ -20,8 +20,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-14          # ARM64 (Sonoma) — bottles work on Sonoma+
-          - os: macos-15-intel    # Intel (Sequoia) — bottles work on Sequoia+
+          # Building a bottle requires bottled dependencies (including go), and
+          # Homebrew only bottles for its supported Apple Silicon macOS releases.
+          # macos-latest trails the newest macOS, so it stays supported, and its
+          # bottle also works on newer macOS. Other systems build from source.
+          - os: macos-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v5
