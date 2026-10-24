@@ -37,3 +37,18 @@ brew update
 
 - For issues with **etr** specifically, please report them on the main project repo:  
   https://github.com/tkjaer/etr/issues
+
+## Maintaining the tap
+
+Changes to `main` must go through a pull request, including administrator changes.
+Force pushes and branch deletion are blocked. Reviewer approval is not required,
+so the maintainer can merge their own pull requests.
+
+After a formula update is merged, the Bottles workflow builds and uploads bottles,
+then opens a separate pull request with the updated bottle metadata. Review and
+merge that pull request, keeping `[bottles]` in the merge commit message to avoid
+triggering another bottle build. Manual bottle runs must target `main`.
+
+The repository Actions setting **Allow GitHub Actions to create and approve pull
+requests** must be enabled for the workflow to open these pull requests. The
+workflow does not approve or merge them and has no bypass of branch protection.

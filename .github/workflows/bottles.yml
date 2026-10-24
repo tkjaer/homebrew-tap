@@ -9,10 +9,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: bottles-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   bottle:
     # Skip bot commits to avoid infinite loops
-    if: "!contains(github.event.head_commit.message, '[bottles]')"
+    if: github.ref == 'refs/heads/main' && !contains(github.event.head_commit.message, '[bottles]')
     strategy:
       matrix:
         include:
@@ -60,6 +64,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v5
 
@@ -99,16 +104,24 @@ jobs:
       - name: Update formula with bottle block
         run: brew bottle --merge --write --no-commit *.bottle.json
 
-      - name: Commit and push
+      - name: Open bottle update pull request
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.formula.outputs.version }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://github.com/${{ github.repository }}.git"
-          git config http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n "x-access-token:${GH_TOKEN}" | base64)"
           git add Formula/etr.rb
-          git diff --cached --quiet || {
-            git commit -m "Update bottles for etr ${{ steps.formula.outputs.version }} [bottles]"
-            git push origin main
-          }
+          if git diff --cached --quiet; then
+            echo "Bottle metadata is already up to date."
+            exit 0
+          fi
+          branch="bottles/etr-${VERSION}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git switch -c "$branch"
+          git commit -m "Update bottles for etr ${VERSION} [bottles]"
+          git push origin "HEAD:refs/heads/$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "Update bottles for etr ${VERSION} [bottles]" \
+            --body "Automated bottle metadata for etr ${VERSION}. Review the formula changes before merging. Keep [bottles] in the merge commit message to avoid rebuilding bottles."
