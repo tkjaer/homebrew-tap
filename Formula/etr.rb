@@ -1,8 +1,8 @@
 class Etr < Formula
   desc "ECMP traceroute tool with path detection and visualization support"
   homepage "https://github.com/tkjaer/etr"
-  url "https://github.com/tkjaer/etr/archive/refs/tags/v1.2.6.tar.gz"
-  sha256 "3c622c09b85015a201381daaf82c72b82be891be0e95587adf6b922b78f61a7d"
+  url "https://github.com/tkjaer/etr/archive/refs/tags/v1.2.7.tar.gz"
+  sha256 "92ef35d8e8dc18cc32aa0eb7334f2bda2dbb10c53a9d773e48b075d839ef05b1"
   license "MIT"
 
   bottle do
