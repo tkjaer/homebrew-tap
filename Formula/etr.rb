@@ -6,9 +6,9 @@ class Etr < Formula
   license "MIT"
 
   bottle do
-    root_url "https://github.com/tkjaer/homebrew-tap/releases/download/v1.3.0"
-    rebuild 3
-    sha256 cellar: :any_skip_relocation, arm64_tahoe: "9185cc07f8695375b08b85f4d08f9fcf42dc728b234df93e14dfb7e9ba1c2471"
+    root_url "https://github.com/tkjaer/homebrew-tap/releases/download/v1.4.0"
+    rebuild 4
+    sha256 cellar: :any_skip_relocation, arm64_tahoe: "5c833befec1764ac0b3f00cff300865147e620fdeab8f1c85e4dab9f57b473b6"
   end
 
   depends_on "go" => :build
